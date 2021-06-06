@@ -7,8 +7,10 @@ namespace rockpaperscissors
     {
         static string[] option = { "papier", "kamień", "nożyce" };
         static int playerCounter, computerCounter;
+        static double oddsFirst = 33.3, oddsSecond = 66.6;
         static void run()
         {
+
             showXY("1. papier \n2. kamień \n3. nożyce", 0, 3);
             showXY("Wybierz czym chcesz być:", 0, 1);
             int x = int.Parse(Console.ReadLine());
@@ -41,23 +43,63 @@ namespace rockpaperscissors
         static void check(string playerOption)
         {
             Random random = new Random();
-            int start = random.Next(0, option.Length);
-            string enemy = option[start];
+            string enemy="";
+            int rand = random.Next(1, 101);
             Thread.Sleep(400);
+            if (rand <= oddsFirst)
+                enemy = "papier";
+            if (rand > oddsFirst && rand < oddsSecond)
+                enemy = "kamień";
+            else
+                enemy = "nożyce";
+
             printT($"Twój przeciwnik wybrał: {enemy}\n");
             Thread.Sleep(1000);
 
             if (playerOption == "papier")
             {
                 if (enemy == "papier")
+                {
+                    //papier na 10%, kamień 45%, nożyce 45%
+                    oddsFirst = 10; oddsSecond = oddsFirst + 45;
                     printT("Remis");
+                    Console.WriteLine(random.Next(1, 11));
+                }
                 if (enemy == "kamień")
                 {
+                    //papier na 10%, kamień 45%, nożyce 45%
+                    oddsFirst = 10; oddsSecond = oddsFirst + 45;
                     printT("Wygrywasz!");
                     playerCounter++;
                 }
                 if (enemy == "nożyce")
                 {
+                    //papier na 90%, kamień 5%, nożyce 5%
+                    oddsFirst = 90; oddsSecond = oddsFirst + 5;
+                    printT("Przegrywasz!");
+                    computerCounter++;
+                }
+            }
+           
+            if (playerOption == "kamień")
+            {
+                if (enemy == "kamień")
+                {
+                    //kamień na 10%, nożyce 45%, papier 45%
+                    oddsFirst = 45; oddsSecond = oddsFirst + 10;
+                    printT("Remis");
+                }
+                if (enemy == "nożyce")
+                {
+                    //kamień na 10%, nożyce 45%, papier 45%
+                    oddsFirst = 45; oddsSecond = oddsFirst + 10;
+                    printT("Wygrywasz!");
+                    playerCounter++;
+                }
+                if (enemy == "papier")
+                {
+                    //papier na 90%, nożyce 5%, papier 5%
+                    oddsFirst = 90; oddsSecond = oddsFirst + 5;
                     printT("Przegrywasz!");
                     computerCounter++;
                 }
@@ -65,29 +107,22 @@ namespace rockpaperscissors
             if (playerOption == "nożyce")
             {
                 if (enemy == "nożyce")
+                {
+                    //nożyce na 10%, papier 45%, kamień 45%   
+                    oddsFirst = 45; oddsSecond = oddsFirst + 45;
                     printT("Remis");
+                }
                 if (enemy == "papier")
                 {
+                    //nożyce na 10%, papier 45%, kamień 45%   
+                    oddsFirst = 45; oddsSecond = oddsFirst + 45;
                     printT("Wygrywasz!");
                     playerCounter++;
                 }
                 if (enemy == "kamień")
                 {
-                    printT("Przegrywasz!");
-                    computerCounter++;
-                }
-            }
-            if (playerOption == "kamień")
-            {
-                if (enemy == "kamień")
-                    printT("Remis");
-                if (enemy == "nożyce")
-                {
-                    printT("Wygrywasz!");
-                    playerCounter++;
-                }
-                if (enemy == "papier")
-                {
+                    oddsFirst = 5; oddsSecond = oddsFirst + 5;
+                    //nożyce na 90%, papier 5%, kamień 5%   
                     printT("Przegrywasz!");
                     computerCounter++;
                 }
@@ -107,6 +142,10 @@ namespace rockpaperscissors
         }
         static void Main(string[] args)
         {
+
+            Random random = new Random();
+
+
             char res;
             int amountGame;
             do
