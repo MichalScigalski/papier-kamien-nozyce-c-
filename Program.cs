@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 
 namespace rockpaperscissors
@@ -6,12 +6,10 @@ namespace rockpaperscissors
     class Program
     {
         static int playerCounter, computerCounter;
-
         //zmienne służące do ustalania prawdopodobieństwa.
-        static double oddsFirst = 33.3, oddsSecond = 66.6;
+        static double percentFirst = 33.3, percentSecond = 66.6;
         static void run()
         {
-
             showXY("1. papier \n2. kamień \n3. nożyce", 0, 3);
             showXY("Wybierz czym chcesz być:", 0, 1);
             int x = int.Parse(Console.ReadLine());
@@ -34,7 +32,7 @@ namespace rockpaperscissors
                     break;
             }
             showCounter();
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
         }
         static void showCounter()
         {
@@ -43,13 +41,14 @@ namespace rockpaperscissors
 
         static void check(string playerOption)
         {
+            //losowanie przez komputer
             Random random = new Random();
-            string enemy="";
+            string enemy = "";
             int rand = random.Next(1, 101);
             Thread.Sleep(400);
-            if (rand <= oddsFirst)
+            if (rand <= percentFirst)
                 enemy = "papier";
-            else if (rand > oddsFirst && rand < oddsSecond)
+            else if (rand > percentFirst && rand < percentSecond)
                 enemy = "kamień";
             else
                 enemy = "nożyce";
@@ -62,44 +61,44 @@ namespace rockpaperscissors
                 if (enemy == "papier")
                 {
                     //papier na 10%, kamień 45%, nożyce 45%
-                    oddsFirst = 10; oddsSecond = oddsFirst + 45;
+                    percentFirst = 10; percentSecond = percentFirst + 45;
                     showXY("Remis");
                 }
                 if (enemy == "kamień")
                 {
-                    //papier na 10%, kamień 45%, nożyce 45%
-                    oddsFirst = 10; oddsSecond = oddsFirst + 45;
+                    //papier 45%, kamień na 10%,  nożyce 45%
+                    percentFirst = 45; percentSecond = percentFirst + 10;
                     showXY("Wygrywasz!");
                     playerCounter++;
                 }
                 if (enemy == "nożyce")
                 {
-                    //papier na 90%, kamień 5%, nożyce 5%
-                    oddsFirst = 90; oddsSecond = oddsFirst + 5;
+                    //papier na 5%, kamień 5%, nożyce 90%
+                    percentFirst = 5; percentSecond = percentFirst + 5;
                     showXY("Przegrywasz!");
                     computerCounter++;
                 }
             }
-           
+
             if (playerOption == "kamień")
             {
                 if (enemy == "kamień")
                 {
                     //kamień na 10%, nożyce 45%, papier 45%
-                    oddsFirst = 45; oddsSecond = oddsFirst + 10;
+                    percentFirst = 45; percentSecond = percentFirst + 10;
                     showXY("Remis");
                 }
                 if (enemy == "nożyce")
                 {
-                    //kamień na 10%, nożyce 45%, papier 45%
-                    oddsFirst = 45; oddsSecond = oddsFirst + 10;
+                    //papier na 45%, kamień 45%, nożyce 10%, 
+                    percentFirst = 45; percentSecond = percentFirst + 45;
                     showXY("Wygrywasz!");
                     playerCounter++;
                 }
                 if (enemy == "papier")
                 {
                     //papier na 90%, nożyce 5%, papier 5%
-                    oddsFirst = 90; oddsSecond = oddsFirst + 5;
+                    percentFirst = 90; percentSecond = percentFirst + 5;
                     showXY("Przegrywasz!");
                     computerCounter++;
                 }
@@ -108,31 +107,27 @@ namespace rockpaperscissors
             {
                 if (enemy == "nożyce")
                 {
-                    //nożyce na 10%, papier 45%, kamień 45%   
-                    oddsFirst = 45; oddsSecond = oddsFirst + 45;
+                    //papier na 45%, kamień 45%, nożyce 10%
+                    percentFirst = 45; percentSecond = percentFirst + 45;
                     showXY("Remis");
                 }
                 if (enemy == "papier")
                 {
-                    //nożyce na 10%, papier 45%, kamień 45%   
-                    oddsFirst = 45; oddsSecond = oddsFirst + 45;
+                    //papier na 10%, kamień 45%, nożyce 45%   
+                    percentFirst = 10; percentSecond = percentFirst + 45;
                     showXY("Wygrywasz!");
                     playerCounter++;
                 }
                 if (enemy == "kamień")
                 {
-                    oddsFirst = 5; oddsSecond = oddsFirst + 5;
-                    //nożyce na 90%, papier 5%, kamień 5%   
+                    //papier na 5%, kamień 90%, nożyce 5%   
+                    percentFirst = 5; percentSecond = percentFirst + 90;
                     showXY("Przegrywasz!");
                     computerCounter++;
                 }
             }
         }
 
-        static void showXY(string t)
-        {
-            Console.WriteLine(t);
-        }
         static void showXY(string t, int left = 0, int top = 0)
         {
             if (left != 0 || top != 0)
@@ -141,12 +136,8 @@ namespace rockpaperscissors
         }
         static void Main(string[] args)
         {
-
-            Random random = new Random();
-
-
-            char res;
-            int amountGame;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            char res; int amountGame;
             do
             {
                 Console.Clear();
@@ -166,7 +157,8 @@ namespace rockpaperscissors
             }
             while (res == 't' || res == 'T');
             Console.Clear();
-            showXY("KONIEC GRY!", 13, 9);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            showXY("KONIEC GRY!", 12, 9);
             showXY("v wynik rundy v", 10, 10);
             showCounter();
         }
