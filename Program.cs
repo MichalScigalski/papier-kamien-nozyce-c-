@@ -5,8 +5,9 @@ namespace rockpaperscissors
 {
     class Program
     {
-        static string[] option = { "papier", "kamień", "nożyce" };
         static int playerCounter, computerCounter;
+
+        //zmienne służące do ustalania prawdopodobieństwa.
         static double oddsFirst = 33.3, oddsSecond = 66.6;
         static void run()
         {
@@ -48,12 +49,12 @@ namespace rockpaperscissors
             Thread.Sleep(400);
             if (rand <= oddsFirst)
                 enemy = "papier";
-            if (rand > oddsFirst && rand < oddsSecond)
+            else if (rand > oddsFirst && rand < oddsSecond)
                 enemy = "kamień";
             else
                 enemy = "nożyce";
 
-            printT($"Twój przeciwnik wybrał: {enemy}\n");
+            showXY($"Twój przeciwnik wybrał: {enemy}\n");
             Thread.Sleep(1000);
 
             if (playerOption == "papier")
@@ -62,21 +63,20 @@ namespace rockpaperscissors
                 {
                     //papier na 10%, kamień 45%, nożyce 45%
                     oddsFirst = 10; oddsSecond = oddsFirst + 45;
-                    printT("Remis");
-                    Console.WriteLine(random.Next(1, 11));
+                    showXY("Remis");
                 }
                 if (enemy == "kamień")
                 {
                     //papier na 10%, kamień 45%, nożyce 45%
                     oddsFirst = 10; oddsSecond = oddsFirst + 45;
-                    printT("Wygrywasz!");
+                    showXY("Wygrywasz!");
                     playerCounter++;
                 }
                 if (enemy == "nożyce")
                 {
                     //papier na 90%, kamień 5%, nożyce 5%
                     oddsFirst = 90; oddsSecond = oddsFirst + 5;
-                    printT("Przegrywasz!");
+                    showXY("Przegrywasz!");
                     computerCounter++;
                 }
             }
@@ -87,20 +87,20 @@ namespace rockpaperscissors
                 {
                     //kamień na 10%, nożyce 45%, papier 45%
                     oddsFirst = 45; oddsSecond = oddsFirst + 10;
-                    printT("Remis");
+                    showXY("Remis");
                 }
                 if (enemy == "nożyce")
                 {
                     //kamień na 10%, nożyce 45%, papier 45%
                     oddsFirst = 45; oddsSecond = oddsFirst + 10;
-                    printT("Wygrywasz!");
+                    showXY("Wygrywasz!");
                     playerCounter++;
                 }
                 if (enemy == "papier")
                 {
                     //papier na 90%, nożyce 5%, papier 5%
                     oddsFirst = 90; oddsSecond = oddsFirst + 5;
-                    printT("Przegrywasz!");
+                    showXY("Przegrywasz!");
                     computerCounter++;
                 }
             }
@@ -110,26 +110,26 @@ namespace rockpaperscissors
                 {
                     //nożyce na 10%, papier 45%, kamień 45%   
                     oddsFirst = 45; oddsSecond = oddsFirst + 45;
-                    printT("Remis");
+                    showXY("Remis");
                 }
                 if (enemy == "papier")
                 {
                     //nożyce na 10%, papier 45%, kamień 45%   
                     oddsFirst = 45; oddsSecond = oddsFirst + 45;
-                    printT("Wygrywasz!");
+                    showXY("Wygrywasz!");
                     playerCounter++;
                 }
                 if (enemy == "kamień")
                 {
                     oddsFirst = 5; oddsSecond = oddsFirst + 5;
                     //nożyce na 90%, papier 5%, kamień 5%   
-                    printT("Przegrywasz!");
+                    showXY("Przegrywasz!");
                     computerCounter++;
                 }
             }
         }
 
-        static void printT(string t)
+        static void showXY(string t)
         {
             Console.WriteLine(t);
         }
@@ -138,7 +138,6 @@ namespace rockpaperscissors
             if (left != 0 || top != 0)
                 Console.SetCursorPosition(left, top);
             Console.WriteLine(t);
-
         }
         static void Main(string[] args)
         {
@@ -152,7 +151,7 @@ namespace rockpaperscissors
             {
                 Console.Clear();
                 computerCounter = 0; playerCounter = 0;
-                printT("Do ilu chcesz grać?");
+                showXY("Do ilu chcesz grać?");
                 amountGame = int.Parse(Console.ReadLine());
 
                 while (playerCounter < amountGame && computerCounter < amountGame)
@@ -162,7 +161,7 @@ namespace rockpaperscissors
                     run();
                 }
 
-                printT("Czy chcesz zagrać ponownie? (t/n)");
+                showXY("Czy chcesz zagrać ponownie? (t/n)");
                 res = char.Parse(Console.ReadLine());
             }
             while (res == 't' || res == 'T');
