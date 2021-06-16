@@ -11,7 +11,7 @@ namespace rockpaperscissors
         static void run()
         {
             showXY("1. papier \n2. kamień \n3. nożyce", 0, 3);
-            showXY("Wybierz czym chcesz być:", 0, 1);
+            showXY("Wybierz przedmiot:", 0, 1);
             int x = int.Parse(Console.ReadLine());
             switch (x)
             {
